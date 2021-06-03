@@ -93,6 +93,35 @@ public class BeanContato {
         }
 
     }
+    
+    public void atualizar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage msg = null;
+
+        if (nome.isEmpty()) {
+            msg = new FacesMessage("Informe nome");
+            context.addMessage(null, msg);
+        }
+
+        if (fone.isEmpty()) {
+            msg = new FacesMessage("Informe fone");
+            context.addMessage(null, msg);
+        }
+
+        if (email.isEmpty()) {
+            msg = new FacesMessage("Informe email");
+            context.addMessage(null, msg);
+        }
+        
+        if (msg == null) {
+            Usuario user = (Usuario) SessionUtil.getParam("usuarioLogado");
+            Contato contato = new Contato(idcontato, nome, fone, email, user.getId());
+            if (DaoContato.atualizar(contato)) {
+                msg = new FacesMessage("Contato atualizado com sucesso");
+                context.addMessage(null, msg);
+            }
+        }
+    }
 
     public int getIdcontato() {
         return idcontato;

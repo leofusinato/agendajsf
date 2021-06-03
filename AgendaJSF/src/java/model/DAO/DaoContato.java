@@ -41,6 +41,28 @@ public class DaoContato {
       return true;
   }  
   
+  public static boolean atualizar(Contato ct) {
+      try {
+          Connection conexao = Conexao.conectar();
+          String sql = "update contato"
+                  + "      set nome = ?,"
+                  + "          fone = ?,"
+                  + "          email = ?,"
+                  + "          usuario = ?"
+                  + "    where idcontato = ? ";
+          PreparedStatement stm = conexao.prepareStatement(sql);
+          stm.setString(1, ct.getNome());
+          stm.setString(2, ct.getFone());
+          stm.setString(3, ct.getEmail());
+          stm.setInt(4, ct.getUsuario().getId());
+          stm.setInt(5, ct.getIdcontato());
+          stm.execute();
+      } catch (SQLException ex) {
+          throw new RuntimeException("Erro ao atualizar contato: " + ex.getMessage());
+      }
+      return true;
+  }
+  
   public static ResultSet getAll(String filtro){
       ResultSet rs = null;
       try {          

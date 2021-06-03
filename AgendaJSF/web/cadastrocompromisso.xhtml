@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Cadastro do usuário</title>
     </h:head>
@@ -10,15 +11,19 @@
         <h:form>
             <h:panelGrid columns="1">
                 
-                <h:outputLabel>Nome</h:outputLabel>
-                <h:inputText value="#{beanContato.nome}" />
+                <h:outputLabel>Contato</h:outputLabel>
+                <h:selectOneMenu>
+                    <f:selectItems value="#{beanCompromisso.select()}" />
+                </h:selectOneMenu>
                 
-                <h:outputLabel>Fone</h:outputLabel>
-                <h:inputText value="#{beanContato.fone}" />
+                <h:outputLabel>Descrição</h:outputLabel>
+                <h:inputText value="#{beanCompromisso.descricao}" />
                 
-                <h:outputLabel>Email</h:outputLabel>
-                <h:inputText value="#{beanContato.email}" />
+                <h:outputLabel>Local</h:outputLabel>
+                <h:inputText value="#{beanCompromisso.local}" />
                 
+                <h:outputLabel>Data</h:outputLabel>
+                <h:inputText value="#{beanCompromisso.data}" />
                 
                 <h:commandButton value="Salvar" action="#{beanContato.salvar()}" />
             </h:panelGrid>
