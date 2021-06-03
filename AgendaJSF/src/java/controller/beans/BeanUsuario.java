@@ -1,21 +1,39 @@
 package controller.beans;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.DAO.DaoUsuario;
 import model.entidades.Usuario;
 import utils.SessionUtil;
 
 @ManagedBean
-@SessionScoped
 public class BeanUsuario {
     
     private int id;
     private String nome;
     private String username;
     private String senha;
+    
+    public List<SelectItem> select() {
+        List<SelectItem> itens = new ArrayList<>();
+        
+        ResultSet rs = DaoUsuario.getAll();
+        try {
+            while(rs.next()) {
+                itens.add(new SelectItem(rs.getInt("idusuario"), rs.getString("nome")));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao buscar os usuários: " + ex.getMessage());
+        }
+        
+        return itens;
+    }
     
     public void cadastrar() {
         FacesContext context = FacesContext.getCurrentInstance();

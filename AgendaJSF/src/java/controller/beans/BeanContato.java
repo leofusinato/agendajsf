@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import model.DAO.DaoContato;
 import model.entidades.Contato;
 import model.entidades.Usuario;
@@ -27,6 +28,21 @@ public class BeanContato {
    
     public String editar(Contato ct){
        return "editacontato.jsf?faces-redirect=true&idcontato="+ct.getIdcontato();
+    }
+    
+    public List<SelectItem> select() {
+        List<SelectItem> itens = new ArrayList<>();
+        
+        ResultSet rs = DaoContato.getAll("");
+        try {
+            while(rs.next()) {
+                itens.add(new SelectItem(rs.getInt("idcontato"), rs.getString("nome")));
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro ao buscar os contatos: " + ex.getMessage());
+        }
+        
+        return itens;
     }
     
     public void excluir(Contato ct){

@@ -1,23 +1,33 @@
 package model.entidades;
 
+import java.util.Date;
+
 public class Compromisso {
     
     private int id;
     private String descricao;
     private String local;
-    private String data;
+    private Date data;
     private Contato contato;
     private Usuario usuario;
 
     public Compromisso() {}
 
-    public Compromisso(int id, String descricao, String local, String data, Contato contato, Usuario usuario) {
+    public Compromisso(String descricao, String local, Date data, int idContato, int idIsuario) {
+        this.descricao = descricao;
+        this.local = local;
+        this.data = data;
+        this.getContato().setIdcontato(idContato);
+        this.getUsuario().setId(idIsuario);
+    }
+    
+    public Compromisso(int id, String descricao, String local, Date data, int idContato, int idIsuario) {
         this.id = id;
         this.descricao = descricao;
         this.local = local;
         this.data = data;
-        this.contato = contato;
-        this.usuario = usuario;
+        this.getContato().setIdcontato(idContato);
+        this.getUsuario().setId(idIsuario);
     }
 
     public int getId() {
@@ -44,15 +54,18 @@ public class Compromisso {
         this.local = local;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
     public Contato getContato() {
+        if(contato == null) {
+            contato = new Contato();
+        }
         return contato;
     }
 
@@ -61,6 +74,9 @@ public class Compromisso {
     }
 
     public Usuario getUsuario() {
+        if(usuario == null) {
+            usuario = new Usuario();
+        }
         return usuario;
     }
 

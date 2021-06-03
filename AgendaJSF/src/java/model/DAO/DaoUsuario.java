@@ -37,12 +37,11 @@ public class DaoUsuario {
         return false;
     }
 
-    public static ResultSet getAll(String filtro) {
+    public static ResultSet getAll() {
         ResultSet rs = null;
         try {
             Connection conexao = Conexao.conectar();
-            String sql = "select * from contato"
-                    + " where nome like '%" + filtro + "%'";
+            String sql = "select * from usuario";
             PreparedStatement stm = conexao.prepareStatement(sql);
             rs = stm.executeQuery();
         } catch (SQLException ex) {

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Cadastro do usuário</title>
     </h:head>
@@ -10,22 +11,28 @@
         <h:messages></h:messages>
         <h:form>
             <h:panelGrid columns="1">
-                
+
                 <h:outputLabel>Contato</h:outputLabel>
-                <h:selectOneMenu>
-                    <f:selectItems value="#{beanCompromisso.select()}" />
+                <h:selectOneMenu value="#{beanCompromisso.contato.idcontato}">
+                    <f:selectItems value="#{beanContato.select()}" />
                 </h:selectOneMenu>
-                
+
+                <h:outputLabel>Usuário</h:outputLabel>
+                <h:selectOneMenu value="#{beanCompromisso.usuario.id}">
+                    <f:selectItems value="#{beanUsuario.select()}" />
+                </h:selectOneMenu>
+                <h:commandLink value="+ Novo" action="cadastrousuario.jsf"/>
+
                 <h:outputLabel>Descrição</h:outputLabel>
                 <h:inputText value="#{beanCompromisso.descricao}" />
-                
+
                 <h:outputLabel>Local</h:outputLabel>
                 <h:inputText value="#{beanCompromisso.local}" />
-                
+
                 <h:outputLabel>Data</h:outputLabel>
-                <h:inputText value="#{beanCompromisso.data}" />
-                
-                <h:commandButton value="Salvar" action="#{beanContato.salvar()}" />
+                <p:calendar id="datetime" value="#{beanCompromisso.data}" pattern="MM/dd/yyyy" />
+
+                <h:commandButton value="Salvar" action="#{beanCompromisso.salvar()}" />
             </h:panelGrid>
         </h:form>
     </h:body>

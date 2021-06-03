@@ -1,12 +1,11 @@
 package controller.beans;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.model.SelectItem;
-import model.DAO.DaoContato;
+import javax.faces.context.FacesContext;
+import model.DAO.DaoCompromisso;
+import model.entidades.Compromisso;
 import model.entidades.Contato;
 import model.entidades.Usuario;
 
@@ -16,25 +15,48 @@ public class BeanCompromisso {
     private int id;
     private String descricao;
     private String local;
-    private String data;
+    private Date data;
     private Contato contato;
     private Usuario usuario;
     
-    public List<SelectItem> select() {
-        List<SelectItem> itens = new ArrayList<>();
-        
-        ResultSet rs = DaoContato.getAll("");
-        try {
-            while(rs.next()) {
-                itens.add(new SelectItem(rs.getInt("idcontato"), rs.getString("nome")));
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException("Erro ao buscar os contatos: " + ex.getMessage());
+    public void salvar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        FacesMessage msg = null;
+
+        if (descricao.isEmpty()) {
+            msg = new FacesMessage("Informe descrição");
+            context.addMessage(null, msg);
+        }
+
+        if (local.isEmpty()) {
+            msg = new FacesMessage("Informe local");
+            context.addMessage(null, msg);
+        }
+
+        if (data.equals("")) {
+            msg = new FacesMessage("Informe data");
+            context.addMessage(null, msg);
         }
         
-        return itens;
+        if (contato.getIdcontato() <= 0) {
+            msg = new FacesMessage("Informe contato");
+            context.addMessage(null, msg);
+        }
+        
+        if (usuario.getId() <= 0) {
+            msg = new FacesMessage("Informe usuário");
+            context.addMessage(null, msg);
+        }
+        
+        if (msg == null) {
+            Compromisso compromisso = new Compromisso(descricao, local, data, getContato().getIdcontato(), getUsuario().getId());
+            if (DaoCompromisso.cadastrar(compromisso)) {
+                msg = new FacesMessage("Compromisso salvo com sucesso");
+                context.addMessage(null, msg);
+            }
+        }
     }
-
+    
     public int getId() {
         return id;
     }
@@ -59,15 +81,18 @@ public class BeanCompromisso {
         this.local = local;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
     public Contato getContato() {
+        if(contato == null) {
+            contato = new Contato();
+        }
         return contato;
     }
 
@@ -76,6 +101,9 @@ public class BeanCompromisso {
     }
 
     public Usuario getUsuario() {
+        if(usuario == null) {
+            usuario = new Usuario();    
+        }
         return usuario;
     }
 
