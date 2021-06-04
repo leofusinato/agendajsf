@@ -1,10 +1,15 @@
 package controller.beans;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import model.DAO.DaoCompromisso;
+import model.DAO.DaoContato;
 import model.entidades.Compromisso;
 import model.entidades.Contato;
 import model.entidades.Usuario;
@@ -18,6 +23,7 @@ public class BeanCompromisso {
     private Date data;
     private Contato contato;
     private Usuario usuario;
+    private List<Compromisso> lista = new ArrayList<>();
     
     public void salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -54,6 +60,31 @@ public class BeanCompromisso {
                 msg = new FacesMessage("Compromisso salvo com sucesso");
                 context.addMessage(null, msg);
             }
+        }
+    }
+    
+    public void excluir(Compromisso compromisso){
+       DaoCompromisso.excluir(compromisso.getId());
+    }
+    
+    public String editar(Compromisso compromisso){
+       return "editacontato.jsf?faces-redirect=true&idcompromisso="+compromisso.getId();
+    }
+    
+    public void getAll(){
+        lista.clear();
+        try {
+            ResultSet rs = DaoCompromisso.getAll();
+            while(rs.next()){
+               lista.add(new Compromisso(rs.getInt("idcompromisso"), 
+                                         rs.getString("descricao"), 
+                                         rs.getString("local"),
+                                         rs.getDate("data"),
+                                         rs.getInt("idcontato"),
+                                         rs.getInt("usuario")));
+            }
+        } catch (SQLException ex) {
+           throw new RuntimeException("Erro de consulta: " + ex.getMessage());
         }
     }
     
@@ -109,6 +140,10 @@ public class BeanCompromisso {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<Compromisso> getLista() {
+        return lista;
     }
     
 }

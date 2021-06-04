@@ -3,6 +3,7 @@ package model.DAO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.entidades.Compromisso;
 import utils.Conexao;
@@ -27,5 +28,32 @@ public class DaoCompromisso {
         }
         return true;
     }
+    
+    public static ResultSet getAll(){
+      ResultSet rs = null;
+      try {          
+          Connection conexao = Conexao.conectar();
+          String sql = "select * from compromisso";
+          PreparedStatement stm = conexao.prepareStatement(sql);
+          rs = stm.executeQuery();
+      } catch (SQLException ex) {
+          throw new RuntimeException("Erro de consulta: " + ex.getMessage());
+      }
+      return rs;
+  }
+    
+    public static boolean excluir(int id){
+      try {
+          Connection conexao = Conexao.conectar();
+          String sql = "delete from compromisso "+
+                       " where idcompromisso = ?";
+          PreparedStatement stm = conexao.prepareStatement(sql);
+          stm.setInt(1, id);
+          stm.execute();
+      } catch (SQLException ex) {
+          throw new RuntimeException("Erro ao excluir compromisso: " + ex.getMessage());
+      }
+      return true;
+  }
     
 }
