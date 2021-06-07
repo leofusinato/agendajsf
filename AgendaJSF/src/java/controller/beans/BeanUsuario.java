@@ -89,6 +89,11 @@ public class BeanUsuario {
         context.addMessage(null, msg);
         return "login.jsf";
     }
+    
+    public String deslogar() {
+        SessionUtil.remove("usuarioLogado");
+        return "login.jsf";
+    }
 
     public int getId() {
         return id;

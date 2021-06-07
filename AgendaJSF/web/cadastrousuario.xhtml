@@ -6,6 +6,7 @@
         <title>Cadastro do usuário</title>
     </h:head>
     <h:body>
+        <h:messages></h:messages>
         <h:form>
             <h:panelGrid>
                 <h:outputLabel>Nome</h:outputLabel>
@@ -17,6 +18,10 @@
                 <h:commandButton value="Cadastrar" action="#{beanUsuario.cadastrar()}"/>
             </h:panelGrid>
         </h:form>
+        
+        <h:form>
+            <h:commandLink value="Voltar" action="menu.jsf"/>
+        </h:form> 
     </h:body>
 </html>
 

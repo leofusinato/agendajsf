@@ -40,16 +40,10 @@
                 <h:outputLabel value="#{compromisso.usuario.id}" />
             </p:column>
             
-            <p:column>
-                <f:facet name="header">Ações</f:facet>
-                <h:form>
-                    <h:commandLink value="Editar" action="#{beanCompromisso.editar(compromisso)}"/>
-                </h:form>                
-                <h:form>
-                    <h:commandLink value="Excluir" action="#{beanCompromisso.excluir(compromisso)}"/>
-                </h:form>                
-            </p:column>
         </p:dataTable>
+        <h:form>
+            <h:commandLink value="Voltar" action="menu.jsf"/>
+        </h:form>                
             
     </h:body>
 </html>

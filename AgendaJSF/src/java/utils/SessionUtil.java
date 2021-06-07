@@ -28,7 +28,4 @@ public class SessionUtil implements Serializable {
         getSession().removeAttribute(key);
     }
 
-    public static void invalidate() {
-        getSession().invalidate();
-    }
 }
