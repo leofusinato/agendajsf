@@ -24,6 +24,9 @@ public class BeanCompromisso {
     private Usuario usuario;
     private List<Compromisso> lista = new ArrayList<>();
     
+    private Date dataFiltro;
+    private int contatoFiltro;
+    
     public void salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage msg = null;
@@ -73,7 +76,14 @@ public class BeanCompromisso {
     public void getAll(){
         lista.clear();
         try {
-            ResultSet rs = DaoCompromisso.getAll();
+            ResultSet rs;
+            if(dataFiltro != null) {
+                rs = DaoCompromisso.getAllByData(new java.sql.Date(dataFiltro.getTime()));
+            } else if(contatoFiltro >= 0){
+                rs = DaoCompromisso.getAllByContato(contatoFiltro);
+            } else {
+                rs = DaoCompromisso.getAll();
+            }
             while(rs.next()){
                lista.add(new Compromisso(rs.getInt("idcompromisso"), 
                                          rs.getString("descricao"), 
@@ -143,6 +153,22 @@ public class BeanCompromisso {
 
     public List<Compromisso> getLista() {
         return lista;
+    }
+
+    public Date getDataFiltro() {
+        return dataFiltro;
+    }
+
+    public void setDataFiltro(Date dataFiltro) {
+        this.dataFiltro = dataFiltro;
+    }
+
+    public int getContatoFiltro() {
+        return contatoFiltro;
+    }
+
+    public void setContatoFiltro(int filtroContato) {
+        this.contatoFiltro = filtroContato;
     }
     
 }

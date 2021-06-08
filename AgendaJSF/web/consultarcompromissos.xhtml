@@ -8,43 +8,55 @@
         <title>Consultar contatos</title>
     </h:head>
     <h:body onload="#{beanCompromisso.getAll()}">
-        
+
+        <h:form>
+            <h:outputLabel value="Data: " />
+            <p:calendar id="datetime" value="#{beanCompromisso.dataFiltro}" pattern="MM/dd/yyyy" />
+            <h:commandButton value="Filtrar" action="#{beanCompromisso.getAll()}"/>
+
+            <h:outputLabel>Contato:</h:outputLabel>
+            <h:selectOneMenu value="#{beanCompromisso.contatoFiltro}">
+                <f:selectItems value="#{beanContato.select()}" />
+            </h:selectOneMenu>
+            <h:commandButton value="Filtrar" action="#{beanCompromisso.getAll()}"/>
+        </h:form>
+
         <p:dataTable var="compromisso" value="#{beanCompromisso.lista}">
             <p:column>
                 <f:facet name="header">Id</f:facet>
                 <h:outputLabel value="#{compromisso.id}" />
             </p:column>
-            
+
             <p:column>
                 <f:facet name="header">Descrição</f:facet>
                 <h:outputLabel value="#{compromisso.descricao}" />
             </p:column>
-            
+
             <p:column>
                 <f:facet name="header">Local</f:facet>
                 <h:outputLabel value="#{compromisso.local}" />
             </p:column>
-            
+
             <p:column>
                 <f:facet name="header">Data</f:facet>
                 <h:outputLabel value="#{compromisso.data}" />
             </p:column>
-            
+
             <p:column>
                 <f:facet name="header">Contato</f:facet>
                 <h:outputLabel value="#{compromisso.contato.idcontato}" />
             </p:column>
-            
+
             <p:column>
                 <f:facet name="header">Usuário</f:facet>
                 <h:outputLabel value="#{compromisso.usuario.id}" />
             </p:column>
-            
+
         </p:dataTable>
         <h:form>
             <h:commandLink value="Voltar" action="menu.jsf"/>
         </h:form>                
-            
+
     </h:body>
 </html>
 
