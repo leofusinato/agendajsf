@@ -12,10 +12,10 @@
         <h:form>
             <h:outputLabel value="Data: " />
             <p:calendar id="datetime" value="#{beanCompromisso.dataFiltro}" pattern="MM/dd/yyyy" />
-            <h:commandButton value="Filtrar" action="#{beanCompromisso.getAll()}"/>
 
             <h:outputLabel>Contato:</h:outputLabel>
             <h:selectOneMenu value="#{beanCompromisso.contatoFiltro}">
+                <f:selectItem itemLabel="Selecione..." itemValue=""/>
                 <f:selectItems value="#{beanContato.select()}" />
             </h:selectOneMenu>
             <h:commandButton value="Filtrar" action="#{beanCompromisso.getAll()}"/>

@@ -69,6 +69,21 @@ public class DaoCompromisso {
         }
         return rs;
     }
+    
+    public static ResultSet getAllByDataAndContato(Date data, int idContato) {
+        ResultSet rs = null;
+        try {
+            Connection conexao = Conexao.conectar();
+            String sql = "select * from compromisso where idcontato = ? and data = ?";
+            PreparedStatement stm = conexao.prepareStatement(sql);
+            stm.setInt(1, idContato);
+            stm.setDate(2, data);
+            rs = stm.executeQuery();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Erro de consulta: " + ex.getMessage());
+        }
+        return rs;
+    }
 
     public static boolean excluir(int id) {
         try {

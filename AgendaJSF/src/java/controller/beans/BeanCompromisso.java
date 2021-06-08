@@ -77,9 +77,11 @@ public class BeanCompromisso {
         lista.clear();
         try {
             ResultSet rs;
-            if(dataFiltro != null) {
+            if(dataFiltro != null && contatoFiltro != 0) {
+                rs = DaoCompromisso.getAllByDataAndContato(new java.sql.Date(dataFiltro.getTime()), contatoFiltro);
+            }else if(dataFiltro != null) {
                 rs = DaoCompromisso.getAllByData(new java.sql.Date(dataFiltro.getTime()));
-            } else if(contatoFiltro >= 0){
+            } else if(contatoFiltro != 0){
                 rs = DaoCompromisso.getAllByContato(contatoFiltro);
             } else {
                 rs = DaoCompromisso.getAll();
